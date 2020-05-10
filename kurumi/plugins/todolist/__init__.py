@@ -1,4 +1,5 @@
 from nonebot import on_command, CommandSession
+import config
 
 __plugin_name__ = 'todolist'
 __plugin_usage__ = r"""todolist:
@@ -8,12 +9,10 @@ usage:
     addtodo: 添加事件
     deltodo: 删除事件"""
 
-me = 3066749824
-
 
 @on_command('todolist', only_to_me = False)
 async def ask_todolist(session: CommandSession):
-    if session.event['user_id'] != me:
+    if not session.event['user_id'] in config.SUPERUSERS:
         await session.send('这是只有主人才能调用的命令哦')
         return
     try:
@@ -37,7 +36,7 @@ async def ask_todolist(session: CommandSession):
 
 @on_command('addtodo', only_to_me = False)
 async def add_todo(session: CommandSession):
-    if session.event['user_id'] != me:
+    if not session.event['user_id'] in config.SUPERUSERS:
         return
     todo = session.get('todo', prompt = '华华想做什么？')
     if todo == 'nothing':
@@ -66,7 +65,7 @@ async def _(session: CommandSession):
 
 @on_command('deltodo', only_to_me = False)
 async def del_todo(session: CommandSession):
-    if session.event['user_id'] != me:
+    if not session.event['user_id'] in config.SUPERUSERS:
         return
     f = open('D:\\Study\\CQAbot\\nonebot\\kurumi\\plugins\\todolist\\todolist', 
     'r', encoding = 'utf-8')

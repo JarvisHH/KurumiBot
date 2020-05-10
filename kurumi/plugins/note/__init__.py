@@ -1,4 +1,5 @@
 from nonebot import on_command, CommandSession
+import config
 
 
 __plugin_name__ = 'note'
@@ -9,11 +10,9 @@ usage:
     takenote 记笔记
 """
 
-me = 3066749824
-
 @on_command('hnote', only_to_me = False)
 async def check_note(session: CommandSession):
-    if session.event['user_id'] != me:
+    if not session.event['user_id'] in config.SUPERUSERS:
         return
     try:
         f = open('D:\\Study\\CQAbot\\nonebot\\kurumi\\plugins\\note\\note.txt', 
@@ -25,7 +24,7 @@ async def check_note(session: CommandSession):
 
 @on_command('takenote', only_to_me = False)
 async def add_note(session: CommandSession):
-    if session.event['user_id'] != me:
+    if not session.event['user_id'] in config.SUPERUSERS:
         return
     note = session.get('note', prompt = '华华想记什么？')
     if note == 'nothing':

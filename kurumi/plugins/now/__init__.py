@@ -1,4 +1,6 @@
 from nonebot import on_command, CommandSession
+import config
+
 
 __plugin_name__ = 'now'
 __plugin_usage__ = r"""now:
@@ -8,7 +10,6 @@ usage:
     hdoing: 更改
     clearnow: 清空"""
 
-me = 3066749824
 
 @on_command('hnow', aliases = ('在干嘛'), only_to_me = False)
 async def ask_now(session: CommandSession):
@@ -25,7 +26,7 @@ async def ask_now(session: CommandSession):
 
 @on_command('hdoing', only_to_me = False)
 async def change_now(session: CommandSession):
-    if session.event['user_id'] != me:
+    if not session.event['user_id'] in config.SUPERUSERS:
         await session.send('滚')
         return
     doing = session.get('doing', prompt = '华华在干什么呢？')
@@ -46,7 +47,7 @@ async def _(session: CommandSession):
 
 @on_command('clearnow', only_to_me = False)
 async def clear_now(session: CommandSession):
-    if session.event['user_id'] != me:
+    if not session.event['user_id'] in config.SUPERUSERS:
         return
     try:
         f = open('D:\\Study\\CQAbot\\nonebot\\kurumi\\plugins\\now\\now.txt', 

@@ -9,5 +9,5 @@ A chat bot based on 酷Q and nonebot.
 - Read
 - Now
 
-It was originally used for listing what homework HH has done to earge HH to study harder. 
+It was originally used for listing what homework HH has done to urge HH to study harder. 
 But then come up with some useful and fun iedas.
